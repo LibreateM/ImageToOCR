@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}ImageToOCR{% endblock %}</title>
+  <style>
+    :root { --bg:#f7f7f5; --card:#fff; --text:#1c1c1a; --muted:#6b6b66; --accent:#2a5bd7; --border:#e2e2dd; }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg:#161616; --card:#1f1f1f; --text:#ececea; --muted:#9a9a94; --accent:#6d93f5; --border:#333; }
+    }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, sans-serif; background:var(--bg); color:var(--text); }
+    header { display:flex; gap:1rem; align-items:center; padding:1rem 1.5rem; border-bottom:1px solid var(--border); }
+    header a { color:var(--text); text-decoration:none; }
+    header .brand { font-weight:700; margin-right:auto; }
+    main { max-width:960px; margin:0 auto; padding:1.5rem; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.25rem; margin-bottom:1rem; }
+    label { display:block; margin:.75rem 0 .25rem; color:var(--muted); font-size:.9rem; }
+    input[type=file], select, input[type=text], textarea { width:100%; padding:.6rem; border:1px solid var(--border); border-radius:8px; background:var(--bg); color:var(--text); font:inherit; }
+    textarea { min-height:260px; font-family: ui-monospace, monospace; }
+    button, .btn { display:inline-block; margin-top:1rem; padding:.6rem 1.1rem; border:0; border-radius:8px; background:var(--accent); color:#fff; font:inherit; cursor:pointer; text-decoration:none; }
+    .btn.secondary { background:transparent; color:var(--accent); border:1px solid var(--accent); }
+    .btn.danger { background:#c0392b; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    @media (max-width:700px){ .grid { grid-template-columns:1fr; } }
+    img { max-width:100%; border-radius:8px; border:1px solid var(--border); }
+    .msg { padding:.7rem 1rem; border-radius:8px; margin-bottom:.6rem; background:var(--card); border:1px solid var(--border); }
+    .badge { font-size:.8rem; padding:.15rem .5rem; border-radius:99px; background:var(--border); color:var(--muted); }
+    .errorlist { color:#c0392b; list-style:none; padding:0; margin:.25rem 0; }
+    .row { display:flex; gap:.5rem; flex-wrap:wrap; }
+    .muted { color:var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="{% url 'upload' %}">ImageToOCR</a>
+    <a href="{% url 'upload' %}">New scan</a>
+    <a href="{% url 'history' %}">History</a>
+  </header>
+  <main>
+    {% for m in messages %}<div class="msg">{{ m }}</div>{% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

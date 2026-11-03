@@ -1,0 +1,23 @@
+{% extends "scanner/base.html" %}
+{% block content %}
+<div class="card">
+  <form method="get" class="row">
+    <input type="text" name="q" value="{{ q }}" placeholder="Scanned text mein search karo..." style="flex:1">
+    <button type="submit" style="margin-top:0">Search</button>
+  </form>
+</div>
+{% for s in scans %}
+  <a href="{% url 'detail' s.pk %}" style="text-decoration:none;color:inherit">
+    <div class="card row" style="align-items:center">
+      <img src="{{ s.scanned.url }}" alt="" style="width:80px;height:80px;object-fit:cover">
+      <div style="flex:1;min-width:0">
+        <strong>{{ s }}</strong>
+        <div class="muted">{{ s.created_at|date:"d M Y, H:i" }}</div>
+        <div class="muted" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.text|truncatechars:120 }}</div>
+      </div>
+    </div>
+  </a>
+{% empty %}
+  <p class="muted">Koi scan nahi mila.</p>
+{% endfor %}
+{% endblock %}

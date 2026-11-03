@@ -1,0 +1,16 @@
+{% extends "scanner/base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Scan a document</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="id_image">Image</label>
+    {{ form.image }} {{ form.image.errors }}
+    <div class="grid">
+      <div><label for="id_language">Language</label>{{ form.language }}</div>
+      <div><label for="id_mode">Scan mode</label>{{ form.mode }}</div>
+    </div>
+    <button type="submit">Scan + Extract text</button>
+  </form>
+</div>
+{% endblock %}

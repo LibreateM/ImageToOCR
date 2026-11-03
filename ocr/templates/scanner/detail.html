@@ -1,0 +1,35 @@
+{% extends "scanner/base.html" %}
+{% block title %}{{ scan }}{% endblock %}
+{% block content %}
+<div class="card">
+  <h2>{{ scan }}</h2>
+  <div class="row">
+    <span class="badge">{{ scan.get_language_display }}</span>
+    <span class="badge">{{ scan.get_mode_display }}</span>
+    <span class="badge">{% if scan.corners_detected %}corners detected{% else %}no corners found{% endif %}</span>
+    {% if scan.ocr_provider %}<span class="badge">{{ scan.ocr_provider }}</span>{% endif %}
+  </div>
+  <div class="grid" style="margin-top:1rem">
+    <div><p class="muted">Original</p><img src="{{ scan.original.url }}" alt="Original"></div>
+    <div><p class="muted">Scanned</p><img src="{{ scan.scanned.url }}" alt="Scanned"></div>
+  </div>
+</div>
+<div class="card">
+  <h3>Extracted text</h3>
+  <textarea id="ocrtext" readonly>{{ scan.text }}</textarea>
+  <div class="row">
+    <button type="button" onclick="copyText()">Copy</button>
+    <a class="btn secondary" href="{% url 'download' scan.pk %}">Download .txt</a>
+    <form method="post" action="{% url 'delete' scan.pk %}" onsubmit="return confirm('Delete this scan?')">
+      {% csrf_token %}<button class="danger" type="submit">Delete</button>
+    </form>
+  </div>
+</div>
+<script>
+  function copyText() {
+    const t = document.getElementById('ocrtext');
+    t.select();
+    navigator.clipboard ? navigator.clipboard.writeText(t.value) : document.execCommand('copy');
+  }
+</script>
+{% endblock %}
